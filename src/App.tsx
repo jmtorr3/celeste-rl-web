@@ -1,8 +1,26 @@
+import { useEffect, useState } from 'react'
+
 function App() {
   const base = import.meta.env.BASE_URL
+  const [readable, setReadable] = useState(
+    () => localStorage.getItem('readable-font') === '1'
+  )
+
+  useEffect(() => {
+    document.body.classList.toggle('readable', readable)
+    localStorage.setItem('readable-font', readable ? '1' : '0')
+  }, [readable])
 
   return (
     <>
+      <button
+        className="font-toggle"
+        onClick={() => setReadable(r => !r)}
+        aria-label="toggle font"
+      >
+        {readable ? 'pixel font' : 'readable font'}
+      </button>
+
       <div className="bootup">
         <img src={`${base}p8logo.png`} alt="pico-8" />
         {' '}

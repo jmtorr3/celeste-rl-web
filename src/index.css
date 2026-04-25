@@ -147,6 +147,39 @@ code {
   margin-right: 1em;
 }
 
+.font-toggle {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 100;
+  font-family: inherit;
+  font-size: 0.9em;
+  color: #fff1e8;
+  background: #1d2b53;
+  border: 0.13em solid #fff1e8;
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+}
+
+.font-toggle:hover {
+  background: #29adff;
+  color: #000;
+}
+
+body.readable,
+body.readable .bootup,
+body.readable .content,
+body.readable table,
+body.readable code,
+body.readable h1, body.readable h2, body.readable h3,
+body.readable h4, body.readable h5, body.readable h6 {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+body.readable {
+  line-height: 1.5;
+}
+
 @media (max-width: 600px) {
   body {
     margin: 4px;

@@ -64,6 +64,7 @@ function App() {
         <br />
         <a href="https://github.com/jmtorr3/celeste-rl" target="_blank">github</a> /
         {' '}<a href="https://github.com/jmtorr3/celeste-rl/blob/master/DEVLOG.md" target="_blank">devlog</a> /
+        {' '}<a href="https://github.com/jmtorr3/celeste-rl/blob/master/notebooks/celeste_results.ipynb" target="_blank">notebook</a> /
         {' '}<a href="#findings">findings</a> /
         {' '}<a href="#results">results</a> /
         {' '}<a href="#methods">methods</a> /
@@ -396,9 +397,9 @@ function App() {
 
         <span className="prompt">team</span>
         <br /><br />
-        jorge manuel torre — project lead · pyleste env · training infrastructure · bc and hybrid pipelines<br />
-        akhil madipalli — dqn training · reward shaping · perception/state fix<br />
-        maryam malik — evaluation across all methods · final results<br />
+        <a href="https://jmtorr3.github.io/" target="_blank">jorge manuel torre</a> — project lead · pyleste env · training infrastructure · bc and hybrid pipelines<br />
+        <a href="https://www.linkedin.com/in/akhilmadipalli/" target="_blank">akhil madipalli</a> — dqn training · reward shaping · perception/state fix<br />
+        <a href="https://www.linkedin.com/in/maryam-m-278a45299/" target="_blank">maryam malik</a> — evaluation across all methods · final results<br />
         <br />
         <span className="muted">cs 4824 — machine learning · spring 2026 · virginia tech</span><br />
         <br />

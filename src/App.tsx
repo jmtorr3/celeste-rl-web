@@ -281,7 +281,8 @@ function App() {
           <li><span className="muted">random</span> — walks into spikes</li>
           <li><span className="muted">bc_r2</span> — freezes in a deterministic loop, runs out of time (88% timeouts)</li>
           <li><span className="muted">curriculum_r5</span> — freezes harder, 97% timeouts. trained well on intermediate stages, didn't generalize to the full level</li>
-          <li><span className="accent-red">hybrid_r2</span> — actively walks into spikes (100% deaths). zero-reward expert transitions anti-trained the network — implementation issue, but striking</li>
+          <li><span className="accent-red">hybrid_r2</span> — actively walks into spikes (100% deaths). zero-reward expert transitions anti-trained the network</li>
+          <li><span className="accent-red">hybrid_r3</span> — fixed the zero-reward bug; reached y=6 in 450 episodes (faster than dqn_r1) then stalled and regressed. expert reward magnitudes (10–50× the online stream) drove off-policy bootstrapping divergence. different failure mode, same 0% outcome</li>
         </ul>
         <br />
 
@@ -319,7 +320,7 @@ function App() {
         <br />
         a few honest caveats:<br />
         <ul>
-          <li><span className="accent-pink">hybrid had a real implementation bug</span> — expert transitions used reward=0 instead of replaying through the env, polluting the q-learning bootstrap target. a correct implementation might recover meaningfully.</li>
+          <li><span className="accent-pink">hybrid is brittle in our setting.</span> we tried two implementations: one with reward=0 on expert transitions (anti-trains the network), one with corrected reward replay (off-policy bootstrapping divergence after early progress). both 0% at evaluation, different failure modes. a robust hybrid (dqfd-style pre-training, annealed expert influence) is future work.</li>
           <li><span className="accent-pink">dqn_r1 vs v3_r9 isn't a clean single-variable ablation</span> — they differ on both architecture (plain vs dueling) and reward shaping (no curiosity vs curiosity). decomposing the 20-point gap would have required another run we didn't have time for.</li>
           <li><span className="accent-pink">single-seed comparisons.</span> variance estimates would require multiple seeds.</li>
           <li><span className="accent-pink">single-room evaluation.</span> all comparisons are on celeste room 0. generalization to other rooms is future work.</li>
@@ -342,12 +343,13 @@ function App() {
         <br />
         <ul>
           <li>
-            <span className="accent-pink">fix hybrid and re-run.</span>{' '}
-            our hybrid records expert transitions with reward=0, which polluted the
-            q-learning bootstrap. a correct version replays the tas through the env.
-            the corrected result is the most interesting open question we have —
-            either it matches plain dqn (weakening "complexity hurts") or it still
-            underperforms (strengthening it). most impactful single experiment left.
+            <span className="accent-pink">robust hybrid implementation.</span>{' '}
+            we tried two hybrid variants: hybrid_r2 (reward=0 on expert transitions
+            → anti-trained, 100% deaths) and hybrid_r3 (replay tas through env to
+            capture real rewards → off-policy bootstrapping divergence, stalls at
+            y=6). a robust hybrid (dqfd-style supervised pre-training before online
+            rl, or annealed expert influence) is the next experiment. both naive
+            implementations failed, in different ways.
           </li>
           <li>
             <span className="accent-pink">multiple seeds.</span>{' '}

@@ -187,16 +187,23 @@ code {
   margin-right: 1em;
 }
 
-/* Subtle breathing glow that nudges users toward the font toggle. Stops once
- * the user has actually toggled it — see body.toggle-found below. */
+/* Breathing glow that nudges users toward the font toggle. Combines an
+ * always-on outer glow with a wider pulsing ring for visibility, plus a
+ * very subtle scale so motion catches the eye even when the page is busy.
+ * Stops on hover or click — see :hover and body.toggle-found below. */
 @keyframes font-toggle-breathe {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 119, 168, 0.0),
-                0 0 6px 0 rgba(255, 241, 232, 0.3);
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0    rgba(255, 119, 168, 0.6),
+      0 0 8px 1px rgba(255, 241, 232, 0.5);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(255, 119, 168, 0.35),
-                0 0 16px 2px rgba(255, 241, 232, 0.6);
+    transform: scale(1.04);
+    box-shadow:
+      0 0 0 8px  rgba(255, 119, 168, 0.0),
+      0 0 22px 6px rgba(255, 119, 168, 0.5),
+      0 0 32px 4px rgba(255, 241, 232, 0.4);
   }
 }
 
@@ -212,25 +219,35 @@ code {
   border: 0.13em solid #fff1e8;
   padding: 0.3em 0.6em;
   cursor: pointer;
-  animation: font-toggle-breathe 2.4s ease-in-out infinite;
+  animation: font-toggle-breathe 1.8s ease-in-out infinite;
+  /* Make the transform-origin centered so the scale pulse looks balanced. */
+  transform-origin: center center;
 }
 
+/* Hover stops the animation (user is showing intent) and switches to the
+ * familiar blue hover state. */
 .font-toggle:hover {
   background: #29adff;
   color: #000;
   animation: none;
+  transform: scale(1);
+  box-shadow: 0 0 12px 2px rgba(41, 173, 255, 0.6);
 }
 
-/* Once the user has toggled the font for the first time, stop the breathing —
- * they've found it. Class is applied by App.tsx on first click. */
+/* After the user has clicked the toggle once, stop the glow permanently.
+ * Class is applied by App.tsx and persisted to localStorage so returning
+ * visitors who already discovered it don't get the pulsing again. */
 body.toggle-found .font-toggle {
   animation: none;
+  transform: scale(1);
+  box-shadow: none;
 }
 
 /* Respect reduced-motion preferences. */
 @media (prefers-reduced-motion: reduce) {
   .font-toggle {
     animation: none;
+    transform: scale(1);
   }
 }
 

@@ -73,6 +73,46 @@ img {
   image-rendering: pixelated;
 }
 
+/* Chart/plot images opt out of pixelation. */
+img.chart {
+  image-rendering: auto;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #1d2b53;
+  background: #fff;
+  margin: 0.5em 0;
+  display: block;
+}
+
+/* Default standalone chart — half-width so multiple fit on a row mentally. */
+img.chart {
+  width: 60%;
+  max-width: 600px;
+}
+
+/* A row of charts side-by-side. Wraps to a single column on narrow screens. */
+.chart-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+
+.chart-row img.chart {
+  flex: 1 1 280px;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  img.chart {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'pico-8';
   font-weight: normal;

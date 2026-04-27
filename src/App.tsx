@@ -17,17 +17,30 @@ function App() {
   const [readable, setReadable] = useState(
     () => localStorage.getItem('readable-font') === '1'
   )
+  // Tracks whether the user has interacted with the font toggle at least once.
+  // Used to stop the breathing glow on the button after they've found it.
+  const [toggleFound, setToggleFound] = useState(
+    () => localStorage.getItem('font-toggle-found') === '1'
+  )
 
   useEffect(() => {
     document.body.classList.toggle('readable', readable)
     localStorage.setItem('readable-font', readable ? '1' : '0')
   }, [readable])
 
+  useEffect(() => {
+    document.body.classList.toggle('toggle-found', toggleFound)
+    if (toggleFound) localStorage.setItem('font-toggle-found', '1')
+  }, [toggleFound])
+
   return (
     <>
       <button
         className="font-toggle"
-        onClick={() => setReadable(r => !r)}
+        onClick={() => {
+          setReadable(r => !r)
+          setToggleFound(true)
+        }}
         aria-label="toggle font"
       >
         {readable ? 'pixel font' : 'readable font'}
@@ -316,6 +329,50 @@ function App() {
         (c#/unity) — a genetic algorithm. ga sidesteps our bottleneck by using parallel exploration
         and population-based selection rather than a replay buffer + ε-greedy. for full-game celeste,
         the right algorithm class is probably population-based or on-policy with curiosity (ppo + rnd).<br />
+        <br />
+
+        <hr />
+        <br />
+
+        <span className="prompt">future work</span>
+        <br /><br />
+        a few directions we'd take this if we had more time. each one is a single
+        runnable experiment on the existing infrastructure, not a vague aspiration.<br />
+        <br />
+        <ul>
+          <li>
+            <span className="accent-pink">fix hybrid and re-run.</span>{' '}
+            our hybrid records expert transitions with reward=0, which polluted the
+            q-learning bootstrap. a correct version replays the tas through the env.
+            the corrected result is the most interesting open question we have —
+            either it matches plain dqn (weakening "complexity hurts") or it still
+            underperforms (strengthening it). most impactful single experiment left.
+          </li>
+          <li>
+            <span className="accent-pink">multiple seeds.</span>{' '}
+            every number here is single-seed. three seeds per method would give us
+            confidence bands on the bar chart and let us test whether the 20-point
+            gap between dqn_r1 and v3_r9 is significant. ~30 gpu-hours.
+          </li>
+          <li>
+            <span className="accent-pink">generalization to other rooms.</span>{' '}
+            all comparisons are on room 0. rooms 5+ require dash chains, rooms 12+
+            have wind, rooms 20+ have falling blocks — different action skills.
+            whether the perception-fix dominance holds across them is open.
+          </li>
+          <li>
+            <span className="accent-pink">single-variable architectural ablation.</span>{' '}
+            dqn_r1 vs v3_r9 differs on two axes (plain vs dueling, curiosity vs no
+            curiosity). running plain dqn + curiosity is one extra training run that
+            cleanly decomposes the 20-point gap. cheapest unfinished experiment.
+          </li>
+          <li>
+            <span className="accent-pink">larger expert dataset.</span>{' '}
+            66 tas transitions is too few. adding 5–10 hand-recorded human
+            playthroughs would test whether bc's 0% is fundamental (covariate shift)
+            or just data-limited.
+          </li>
+        </ul>
         <br />
 
         <hr />

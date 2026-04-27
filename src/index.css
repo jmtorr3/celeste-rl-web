@@ -187,6 +187,19 @@ code {
   margin-right: 1em;
 }
 
+/* Subtle breathing glow that nudges users toward the font toggle. Stops once
+ * the user has actually toggled it — see body.toggle-found below. */
+@keyframes font-toggle-breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 119, 168, 0.0),
+                0 0 6px 0 rgba(255, 241, 232, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(255, 119, 168, 0.35),
+                0 0 16px 2px rgba(255, 241, 232, 0.6);
+  }
+}
+
 .font-toggle {
   position: fixed;
   top: 8px;
@@ -199,11 +212,26 @@ code {
   border: 0.13em solid #fff1e8;
   padding: 0.3em 0.6em;
   cursor: pointer;
+  animation: font-toggle-breathe 2.4s ease-in-out infinite;
 }
 
 .font-toggle:hover {
   background: #29adff;
   color: #000;
+  animation: none;
+}
+
+/* Once the user has toggled the font for the first time, stop the breathing —
+ * they've found it. Class is applied by App.tsx on first click. */
+body.toggle-found .font-toggle {
+  animation: none;
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  .font-toggle {
+    animation: none;
+  }
 }
 
 body.readable,

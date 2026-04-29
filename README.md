@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# celeste-rl-web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Results writeup site for [**celeste-rl**](https://github.com/jmtorr3/celeste-rl) — a deep reinforcement learning project training agents to play Celeste Classic on the Pyleste emulator (Virginia Tech CS 4824 ML final project).
 
-Currently, two official plugins are available:
+> 🔗 **Live:** [jmtorr3.github.io/celeste-rl-web](https://jmtorr3.github.io/celeste-rl-web/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The site is a single-page PICO-8-styled writeup that pulls comparison charts, training curves, and gameplay GIFs directly from the `celeste-rl` repo's `docs/` folder, so the writeup always reflects the latest experiment outputs.
 
-## React Compiler
+## What's on the page
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Methodology — agents trained (DQN, BC, hybrid), reward shaping, and evaluation protocol
+- Training curves for the strongest runs (`dqn_r1`, `v3_r9`)
+- Comparison plots — completion rate, outcome breakdown, height distribution
+- Side-by-side gameplay GIFs of the trained agents
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React 19 · TypeScript · Vite · deployed via `gh-pages`.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Running locally
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deploying
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run deploy   # builds and pushes dist/ to gh-pages branch
 ```
+
+## Related
+
+- **[celeste-rl](https://github.com/jmtorr3/celeste-rl)** — the training pipeline, agents, and evaluation code (this site is the public-facing report for that repo).

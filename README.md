@@ -33,3 +33,9 @@ npm run deploy   # builds and pushes dist/ to gh-pages branch
 ## Related
 
 - **[celeste-rl](https://github.com/jmtorr3/celeste-rl)** — the training pipeline, agents, and evaluation code (this site is the public-facing report for that repo).
+
+## Credits
+
+*Celeste Classic* was created by [Maddy Thorson](https://maddythorson.com/) and [Noel Berry](https://noelberry.ca/) for PICO-8 — all game assets, level design, and original code belong to them. This site is a non-commercial academic writeup and does not redistribute the original cart or assets.
+
+The PICO-8 visual styling, fonts, and the web-playable Celeste Classic referenced throughout were drawn from the [CelesteClassic community](https://github.com/CelesteClassic), in particular the [celesteclassic.github.io](https://github.com/CelesteClassic/celesteclassic.github.io) web port and the [Pyleste](https://github.com/CelesteClassic/Pyleste) emulator that powers the underlying training environment.
